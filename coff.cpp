@@ -45,6 +45,7 @@ void COFF::dump_all(std::ostream &os) {
 
     for (DWORD i = 0; i < fh.NumberOfSections; i++) {
         IMAGE_SECTION_HEADER sh;
+        file.seekg(IMAGE_SIZEOF_FILE_HEADER + i * IMAGE_SIZEOF_SECTION_HEADER, file.beg);
         file.read(reinterpret_cast<char*>(&sh), sizeof(sh));
 
         os << "IMAGE_SECTION_HEADER\n"
@@ -64,6 +65,21 @@ void COFF::dump_all(std::ostream &os) {
         }
         os << "  - " << coffstr::section_header_characteristic_align(sh.Characteristics & IMAGE_SCN_ALIGN_MASK) << '\n';
         os << '\n';
+
+        if (sh.PointerToRelocations) {
+            file.seekg(sh.PointerToRelocations, file.beg);
+            for (DWORD j = 0; j < sh.NumberOfRelocations; j++) {
+                IMAGE_RELOCATION rel;
+                file.read(reinterpret_cast<char*>(&rel), sizeof(rel));
+
+                os << " IMAGE_RELOCATION\n"
+                   << "  VirtualAddress   " << hexw(8) << rel.VirtualAddress   << '\n'
+                   << "  SymbolTableIndex " << dec     << rel.SymbolTableIndex << '\n'
+                   ;
+                os << "  Type             " << hexw(4) << rel.Type << " (" << coffstr::section_header_relocation_type(fh.Machine, rel.Type) << ")\n";
+            }
+            os << '\n';
+        }
     }
 
     DWORD sizeof_string_table;

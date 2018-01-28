@@ -192,5 +192,53 @@ char const* symbol_storage_class(BYTE cls) {
     return "UNKNOWN";
 }
 
+char const* section_header_relocation_type(WORD machine, WORD type) {
+    switch (machine) {
+        case IMAGE_FILE_MACHINE_I386: return section_header_relocation_type_i386(type);
+        case IMAGE_FILE_MACHINE_AMD64: return section_header_relocation_type_amd64(type);
+    }
+    return "UNKNOWN";
+}
+
+char const* section_header_relocation_type_i386(WORD type) {
+    switch (type) {
+        case IMAGE_REL_I386_ABSOLUTE : return "ABSOLUTE";
+        case IMAGE_REL_I386_DIR16    : return "DIR16";
+        case IMAGE_REL_I386_REL16    : return "REL16";
+        case IMAGE_REL_I386_DIR32    : return "DIR32";
+        case IMAGE_REL_I386_DIR32NB  : return "DIR32NB";
+        case IMAGE_REL_I386_SEG12    : return "SEG12";
+        case IMAGE_REL_I386_SECTION  : return "SECTION";
+        case IMAGE_REL_I386_SECREL   : return "SECREL";
+        case IMAGE_REL_I386_TOKEN    : return "TOKEN";
+        case IMAGE_REL_I386_SECREL7  : return "SECREL7";
+        case IMAGE_REL_I386_REL32    : return "REL32";
+    }
+    return "UNKNOWN";
+}
+
+char const* section_header_relocation_type_amd64(WORD type) {
+    switch (type) {
+        case IMAGE_REL_AMD64_ABSOLUTE : return "ABSOLUTE";
+        case IMAGE_REL_AMD64_ADDR64   : return "ADDR64";
+        case IMAGE_REL_AMD64_ADDR32   : return "ADDR32";
+        case IMAGE_REL_AMD64_ADDR32NB : return "ADDR32NB";
+        case IMAGE_REL_AMD64_REL32    : return "REL32";
+        case IMAGE_REL_AMD64_REL32_1  : return "REL32_1";
+        case IMAGE_REL_AMD64_REL32_2  : return "REL32_2";
+        case IMAGE_REL_AMD64_REL32_3  : return "REL32_3";
+        case IMAGE_REL_AMD64_REL32_4  : return "REL32_4";
+        case IMAGE_REL_AMD64_REL32_5  : return "REL32_5";
+        case IMAGE_REL_AMD64_SECTION  : return "SECTION";
+        case IMAGE_REL_AMD64_SECREL   : return "SECREL";
+        case IMAGE_REL_AMD64_SECREL7  : return "SECREL7";
+        case IMAGE_REL_AMD64_TOKEN    : return "TOKEN";
+        case IMAGE_REL_AMD64_SREL32   : return "SREL32";
+        case IMAGE_REL_AMD64_PAIR     : return "PAIR";
+        case IMAGE_REL_AMD64_SSPAN32  : return "SSPAN32";
+    }
+    return "UNKNOWN";
+}
+
 }
 
