@@ -115,5 +115,82 @@ char const* section_header_characteristic_align(DWORD align) {
     return "";
 }
 
+char const* symbol_section_number(SHORT nb) {
+    switch (nb) {
+        case IMAGE_SYM_UNDEFINED : return "UNDEFINED";
+        case IMAGE_SYM_ABSOLUTE  : return "ABSOLUTE";
+        case IMAGE_SYM_DEBUG     : return "DEBUG";
+    }
+    return "";
+}
+
+char const* symbol_type(WORD type) {
+    type &= 0xFF;
+    switch (type) {
+        case IMAGE_SYM_TYPE_NULL   : return "NULL";
+        case IMAGE_SYM_TYPE_VOID   : return "VOID";
+        case IMAGE_SYM_TYPE_CHAR   : return "CHAR";
+        case IMAGE_SYM_TYPE_SHORT  : return "SHORT";
+        case IMAGE_SYM_TYPE_INT    : return "INT";
+        case IMAGE_SYM_TYPE_LONG   : return "LONG";
+        case IMAGE_SYM_TYPE_FLOAT  : return "FLOAT";
+        case IMAGE_SYM_TYPE_DOUBLE : return "DOUBLE";
+        case IMAGE_SYM_TYPE_STRUCT : return "STRUCT";
+        case IMAGE_SYM_TYPE_UNION  : return "UNION";
+        case IMAGE_SYM_TYPE_ENUM   : return "ENUM";
+        case IMAGE_SYM_TYPE_MOE    : return "MOE";
+        case IMAGE_SYM_TYPE_BYTE   : return "BYTE";
+        case IMAGE_SYM_TYPE_WORD   : return "WORD";
+        case IMAGE_SYM_TYPE_UINT   : return "UINT";
+        case IMAGE_SYM_TYPE_DWORD  : return "DWORD";
+        case IMAGE_SYM_TYPE_PCODE  : return "PCODE";
+    }
+    return "";
+}
+
+char const* symbol_dtype(WORD type) {
+    type &= 0xFF00;
+    switch (type) {
+        case IMAGE_SYM_DTYPE_NULL     : return "NULL";
+        case IMAGE_SYM_DTYPE_POINTER  : return "POINTER";
+        case IMAGE_SYM_DTYPE_FUNCTION : return "FUNCTION";
+        case IMAGE_SYM_DTYPE_ARRAY    : return "ARRAY";
+    }
+    return "";
+}
+
+char const* symbol_storage_class(BYTE cls) {
+    switch (cls) {
+        case IMAGE_SYM_CLASS_END_OF_FUNCTION  : return "END_OF_FUNCTION";
+        case IMAGE_SYM_CLASS_NULL             : return "NULL";
+        case IMAGE_SYM_CLASS_AUTOMATIC        : return "AUTOMATIC";
+        case IMAGE_SYM_CLASS_EXTERNAL         : return "EXTERNAL";
+        case IMAGE_SYM_CLASS_STATIC           : return "STATIC";
+        case IMAGE_SYM_CLASS_REGISTER         : return "REGISTER";
+        case IMAGE_SYM_CLASS_EXTERNAL_DEF     : return "EXTERNAL_DEF";
+        case IMAGE_SYM_CLASS_LABEL            : return "LABEL";
+        case IMAGE_SYM_CLASS_UNDEFINED_LABEL  : return "UNDEFINED_LABEL";
+        case IMAGE_SYM_CLASS_MEMBER_OF_STRUCT : return "MEMBER_OF_STRUCT";
+        case IMAGE_SYM_CLASS_ARGUMENT         : return "ARGUMENT";
+        case IMAGE_SYM_CLASS_STRUCT_TAG       : return "STRUCT_TAG";
+        case IMAGE_SYM_CLASS_MEMBER_OF_UNION  : return "MEMBER_OF_UNION";
+        case IMAGE_SYM_CLASS_UNION_TAG        : return "UNION_TAG";
+        case IMAGE_SYM_CLASS_TYPE_DEFINITION  : return "TYPE_DEFINITION";
+        case IMAGE_SYM_CLASS_UNDEFINED_STATIC : return "UNDEFINED_STATIC";
+        case IMAGE_SYM_CLASS_ENUM_TAG         : return "ENUM_TAG";
+        case IMAGE_SYM_CLASS_MEMBER_OF_ENUM   : return "MEMBER_OF_ENUM";
+        case IMAGE_SYM_CLASS_REGISTER_PARAM   : return "REGISTER_PARAM";
+        case IMAGE_SYM_CLASS_BIT_FIELD        : return "BIT_FIELD";
+        case IMAGE_SYM_CLASS_FAR_EXTERNAL     : return "FAR_EXTERNAL";
+        case IMAGE_SYM_CLASS_BLOCK            : return "BLOCK";
+        case IMAGE_SYM_CLASS_FUNCTION         : return "FUNCTION";
+        case IMAGE_SYM_CLASS_END_OF_STRUCT    : return "END_OF_STRUCT";
+        case IMAGE_SYM_CLASS_FILE             : return "FILE";
+        case IMAGE_SYM_CLASS_SECTION          : return "SECTION";
+        case IMAGE_SYM_CLASS_WEAK_EXTERNAL    : return "WEAK_EXTERNAL";
+    }
+    return "UNKNOWN";
+}
+
 }
 

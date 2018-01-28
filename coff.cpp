@@ -65,5 +65,38 @@ void COFF::dump_all(std::ostream &os) {
         os << "  - " << coffstr::section_header_characteristic_align(sh.Characteristics & IMAGE_SCN_ALIGN_MASK) << '\n';
         os << '\n';
     }
+
+    DWORD sizeof_string_table;
+    file.seekg(fh.PointerToSymbolTable + fh.NumberOfSymbols * IMAGE_SIZEOF_SYMBOL, file.beg);
+    file.read(reinterpret_cast<char*>(&sizeof_string_table), sizeof(sizeof_string_table));
+    std::vector<char> string_table(sizeof_string_table);
+    file.seekg(-sizeof(sizeof_string_table), file.cur);
+    file.read(string_table.data(), sizeof_string_table);
+
+    file.seekg(fh.PointerToSymbolTable, file.beg);
+    for (DWORD i = 0; i < fh.NumberOfSymbols; i++) {
+        IMAGE_SYMBOL sym;
+        file.seekg(fh.PointerToSymbolTable + i * IMAGE_SIZEOF_SYMBOL);
+        file.read(reinterpret_cast<char*>(&sym), sizeof(sym));
+
+        os << "IMAGE_SYMBOL\n";
+        if (sym.N.Name.Short) {
+        os << " Name               " << std::string((char const*)sym.N.ShortName, sizeof(sym.N.ShortName)) << '\n';
+        } else {
+        os << " Name               " << hexw(8) << sym.N.Name.Long << " : " << &string_table[sym.N.Name.Long] << '\n';
+        }
+        os << " Value              " << hexw(8) << sym.Value << '\n';
+        os << " SectionNumber      " << dec     << sym.SectionNumber;
+        if (sym.SectionNumber <= 0)
+            os << " (" << coffstr::symbol_section_number(sym.SectionNumber) << ')';
+        os << '\n';
+        os << " Type               " << hexw(8) << sym.Type << " : " << coffstr::symbol_type(sym.Type) << ' ' << coffstr::symbol_dtype(sym.Type) << '\n';
+        os << " StorageClass       " << hexw(8) << (DWORD)sym.StorageClass << " : " << coffstr::symbol_storage_class(sym.StorageClass) << '\n';
+        os << " NumberOfAuxSymbols " << dec     << (DWORD)sym.NumberOfAuxSymbols << '\n'
+           << '\n';
+
+        // Skip AUX symbols
+        i += sym.NumberOfAuxSymbols;
+    }
 }
 
