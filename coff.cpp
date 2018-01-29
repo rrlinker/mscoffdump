@@ -97,7 +97,7 @@ void COFF::dump_all(std::ostream &os) {
         file.seekg(fh.PointerToSymbolTable + i * IMAGE_SIZEOF_SYMBOL);
         file.read(reinterpret_cast<char*>(&sym), sizeof(sym));
 
-        os << "IMAGE_SYMBOL\n";
+        os << "IMAGE_SYMBOL (" << i << ")\n";
         if (sym.N.Name.Short) {
         os << " Name               " << std::string((char const*)sym.N.ShortName, sizeof(sym.N.ShortName)) << '\n';
         } else {
