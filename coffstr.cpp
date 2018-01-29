@@ -125,7 +125,7 @@ char const* symbol_section_number(SHORT nb) {
 }
 
 char const* symbol_type(WORD type) {
-    type &= 0xFF;
+    type = BTYPE(type);
     switch (type) {
         case IMAGE_SYM_TYPE_NULL   : return "NULL";
         case IMAGE_SYM_TYPE_VOID   : return "VOID";
@@ -149,7 +149,7 @@ char const* symbol_type(WORD type) {
 }
 
 char const* symbol_dtype(WORD type) {
-    type &= 0xFF00;
+    type = (type & N_TMASK) >> N_BTSHFT;
     switch (type) {
         case IMAGE_SYM_DTYPE_NULL     : return "NULL";
         case IMAGE_SYM_DTYPE_POINTER  : return "POINTER";
