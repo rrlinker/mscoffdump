@@ -63,7 +63,9 @@ void COFF::dump_all(std::ostream &os) {
         for (auto chrt = sh.Characteristics & ~IMAGE_SCN_ALIGN_MASK; chrt; chrt &= chrt - 1) {
             os << "  - " << coffstr::section_header_characteristic(chrt & ~(chrt - 1)) << '\n';
         }
-        os << "  - " << coffstr::section_header_characteristic_align(sh.Characteristics & IMAGE_SCN_ALIGN_MASK) << '\n';
+        if (sh.Characteristics & IMAGE_SCN_ALIGN_MASK) {
+            os << "  - " << coffstr::section_header_characteristic_align(sh.Characteristics & IMAGE_SCN_ALIGN_MASK) << '\n';
+        }
         os << '\n';
 
         if (sh.PointerToRelocations) {
