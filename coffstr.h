@@ -1,6 +1,10 @@
 #pragma once
 
+#ifdef _WIN32
+#include <Windows.h>
+#else
 #include "vendor/wine/windef.h"
+#endif
 
 namespace coffstr {
 

@@ -3,13 +3,11 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <experimental/filesystem>
-
-namespace fs = std::experimental::filesystem;
+#include <filesystem>
 
 class COFF {
 public:
-    COFF(fs::path const &path);
+    COFF(std::filesystem::path const &path);
 
     void dump_all(std::ostream &os);
 

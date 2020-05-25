@@ -4,7 +4,6 @@ namespace coffstr {
 
 char const* file_header_machine(DWORD machine) {
     switch (machine) {
-        case IMAGE_FILE_MACHINE_I860      : return "I860";
         case IMAGE_FILE_MACHINE_I386      : return "I386";
         case IMAGE_FILE_MACHINE_R3000     : return "R3000";
         case IMAGE_FILE_MACHINE_R4000     : return "R4000";
@@ -46,7 +45,6 @@ char const* file_header_characteristic(DWORD chrt) {
         case IMAGE_FILE_LOCAL_SYMS_STRIPPED     : return "LOCAL_SYMS_STRIPPED";
         case IMAGE_FILE_AGGRESIVE_WS_TRIM       : return "AGGRESIVE_WS_TRIM";
         case IMAGE_FILE_LARGE_ADDRESS_AWARE     : return "LARGE_ADDRESS_AWARE";
-        case IMAGE_FILE_16BIT_MACHINE           : return "16BIT_MACHINE";
         case IMAGE_FILE_BYTES_REVERSED_LO       : return "BYTES_REVERSED_LO";
         case IMAGE_FILE_32BIT_MACHINE           : return "32BIT_MACHINE";
         case IMAGE_FILE_DEBUG_STRIPPED          : return "DEBUG_STRIPPED";

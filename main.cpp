@@ -1,9 +1,6 @@
 #include "coff.h"
 
 #include <iostream>
-#include <experimental/filesystem>
-
-namespace fs = std::experimental::filesystem;
 
 int main(int argc, char const *argv[]) {
     // cstdio shouldn't be used
@@ -18,7 +15,7 @@ int main(int argc, char const *argv[]) {
     }
 
     try {
-        auto path = fs::path(argv[1]);
+        auto path = std::filesystem::path(argv[1]);
         COFF coff(path);
         coff.dump_all(std::cout);
     } catch (std::exception const &e) {

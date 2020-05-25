@@ -1,7 +1,11 @@
 #include "coff.h"
 #include "coffstr.h"
 
+#ifdef _WIN32
+#include <Windows.h>
+#else
 #include "vendor/wine/winnt.h"
+#endif
 
 #include <string>
 
@@ -17,7 +21,7 @@ std::ostream& operator<<(std::ostream &os, hexw const &&h) {
     return os << std::hex << std::setw(h.width);
 }
 
-COFF::COFF(fs::path const &path) {
+COFF::COFF(std::filesystem::path const &path) {
     file.exceptions(std::ifstream::badbit | std::ifstream::failbit);
     file.open(path);
 }

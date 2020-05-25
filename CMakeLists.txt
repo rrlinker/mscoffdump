@@ -19,12 +19,9 @@ set_target_properties(
     CXX_STANDARD_REQUIRED ON
 )
 
-target_link_libraries(
-    ${PROJECT_NAME}
-    PRIVATE stdc++fs
-)
-
-target_include_directories(
-    ${PROJECT_NAME}
-    PRIVATE "${PROJECT_SOURCE_DIR}/vendor/wine"
-)
+if(NOT WIN32)
+    target_include_directories(
+        ${PROJECT_NAME}
+        PRIVATE "${PROJECT_SOURCE_DIR}/vendor/wine"
+    )
+endif()
